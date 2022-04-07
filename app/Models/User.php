@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Store;
+use App\Models\Brands;
 use App\Models\productLine;
 use App\Models\UserProfile;
 use Laravel\Sanctum\HasApiTokens;
@@ -90,6 +91,8 @@ class User extends Authenticatable implements JWTSubject
       public function productLine(){
         return $this->hasMany(productLine::class,'owners_id');
     }
+
+    
   
 
       

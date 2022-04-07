@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Store;
+use App\Models\Brands;
 use App\Models\UserProfile;
 use Dingo\Api\Routing\Helpers;
 use Illuminate\Database\Seeder;
@@ -61,17 +62,16 @@ class StoreSeeder extends Seeder
     );
 
     //this is a user having multiple stores 
-    User::factory()->count(1)
-    ->has(UserProfile::factory(1))
-    ->has($luxuryPhoneStore)
-    ->has($budgetPhoneStore)
-->create()
-->each(
-    function($user){
-        $user->assignRole('store_admin');
-    }
-);
-
+        User::factory()->count(1)
+        ->has(UserProfile::factory(1))
+        ->has($luxuryPhoneStore)
+        ->has($budgetPhoneStore)
+    ->create()
+    ->each(
+        function($user){
+            $user->assignRole('store_admin');
+        }
+    );
 
     }
 }

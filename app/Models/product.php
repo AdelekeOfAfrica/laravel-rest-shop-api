@@ -19,6 +19,7 @@ class product extends Model
       return $this->belongsToMany(productLine::class,'product_match');
     }
     public function category(){
-      return $this->belongsToMany(category::class,'category_store');
+      return $this->belongsTo(category::class,'category_id','id'); //category_id is the name used in the product table which is used to get the id in the category table 
     }
+    
 }

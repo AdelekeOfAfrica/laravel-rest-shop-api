@@ -23,9 +23,9 @@ class CategoryController extends Controller
         //
         $category=category::all();
 
-        return $this->response->collection($category, (new CategoryTransformer)->setDefaultIncludes(["product"]))->setStatusCode(200);
-
-
+       // return $this->response->collection($category, (new CategoryTransformer)->setDefaultIncludes(["product"]))->setStatusCode(200);
+        return $this->response->collection($category, new CategoryTransformer)->setStatusCode(200);
+     
     }
 
     /**
@@ -34,32 +34,25 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,$id)
+    public function store(Request $request)
     {
         //
-        $rules =
-        [
-            'name'=>[
-                'required',
-                'string',
-                'min:3',
-                'max:30'
-            ],
+        $validator = Validator::make($request->all(),[
             
-          
-        ];
-        $validator = Validator::make($request->all(),$rules);
+            'name'=>'required|string|min:3|max:30',
+            'slug'=>'required|string|min:3|max:30',
+            ]);
  
         if($validator->fails()){
-            return response()->json(['errors'=>$validator->error()],400);
+            return response()->json(['errors'=>$validator->errors()]);
         }
         try{
-            
+            $category = new category;
+            $category->name = $request->name;
+            $category->slug = $request->slug;
+            $category->save();
 
-            $category = product::findOrFail($id)->category()->Create([ 
-            'name'=>$request->name,
-            'slug'=>$request->name
-        ]);
+    
             
                 
             
@@ -169,7 +162,7 @@ class CategoryController extends Controller
                 'message'=>'stores deleted successfully',
                 'id'=>$id
             ];
-            return $response()->json($response,200);
+            return response()->json($response,200);
 
         }catch(HttpException $th){
             throw $th;

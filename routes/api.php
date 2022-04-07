@@ -91,9 +91,17 @@ $api->version('v1', function($api){
 
     //middleware for store_admin
     $api->group(['middleware'=>['role:store_admin'],'prefix'=>'stadmin'], function($api){
-        $api->resource('/stores/{store}/productline', ProductLineController::class);
-        $api->resource('/stores/{store}/product',ProductController::class);
-        $api->resource('/stores/{store}/category',CategoryController::class);
+        $api->resource('/stores/productline', ProductLineController::class);
+        $api->resource('/stores/product',ProductController::class);
+        $api->get('stores/product/{slug}','App\Http\Controllers\ProductController@product');//fetching  all products by its category slug 
+        $api->get('stores/product/{category_slug}/{product_slug}','App\Http\Controllers\ProductController@productcat');//fetching single product by its category slug
+        $api->resource('/stores/category',CategoryController::class);
+        $api->post('add-to-cart','App\Http\Controllers\CartController@store');
+        $api->get('cart','App\Http\Controllers\CartController@index');
+        $api->put('cart-update/{cart_id}/{scope}','App\Http\Controllers\CartController@update');
+        $api->delete('cart-delete/{cart_id}/','App\Http\Controllers\CartController@destroy');
+        $api->post('place-order','App\Http\Controllers\checkoutcontroller@store');
+        $api->get('get-order/{order_id}','App\Http\Controllers\checkoutcontroller@index');
     });
   
 });

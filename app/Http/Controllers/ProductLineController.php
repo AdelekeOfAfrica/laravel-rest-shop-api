@@ -102,7 +102,7 @@ class ProductLineController extends Controller
      * @param  \App\Models\productLine  $productLine
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $storeId,$id)
+    public function update(Request $request,$id)
     {
         //
        $pl = productLine::findOrFail($id);
@@ -156,7 +156,7 @@ class ProductLineController extends Controller
      * @param  \App\Models\productLine  $productLine
      * @return \Illuminate\Http\Response
      */
-    public function destroy(productLine $productLine,$id,$storeId)
+    public function destroy(productLine $productLine,$id)
     {
         //
          $pl = productLine::findOrFail($id);

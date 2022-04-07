@@ -18,8 +18,6 @@ class Brands extends Model
         return $this->belongsToMany(Store::class,'brand_store');
     }
 
-
-
     public function productLines(){
         return $this->belongsToMany(productLine::class,'product_line_store');
     }

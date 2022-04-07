@@ -24,4 +24,7 @@ class Store extends Model
         return $this->belongsToMany(Brands::class,'brand_store');
     }
   
+
+     
+  
 }

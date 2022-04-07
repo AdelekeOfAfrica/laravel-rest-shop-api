@@ -13,8 +13,8 @@ class CategoryTransformer extends TransformerAbstract{
 
         ];
     }
-    public function includeProduct(category $cat){
-        return $this->item($cat->products->first(), new ProductTransformer);
-    }
+    //public function includeProduct(category $cat){
+       // return $this->collection($cat->products->first(), new ProductTransformer);
+   // }
  
 }

@@ -1,7 +1,10 @@
 <?php 
 namespace App\Transformers;
 use App\Models\product;
+use App\Models\category;
 use League\Fractal\TransformerAbstract;
+use App\Transformers\CategoryTransformer;
+
 
 class ProductTransformer extends TransformerAbstract{
     public function transform(product $product){
@@ -21,10 +24,7 @@ class ProductTransformer extends TransformerAbstract{
         ];
        
     }
-
-    public function includeProduclLine(product $product){
-        return $this->item($product->productLine->first(), new ProduclLineTransformer);
+    public function includecategory(product $product){
+        return $this->item($product->category, new CategoryTransformer);
     }
-
-   
 }

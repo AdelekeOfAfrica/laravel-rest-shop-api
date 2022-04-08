@@ -2,7 +2,7 @@
 namespace App\Transformers;
 use App\Models\category;
 use League\Fractal\TransformerAbstract;
-use App\Transformers\ProductTransformer;
+
 
 class CategoryTransformer extends TransformerAbstract{
     public function transform(category $cat){
@@ -13,8 +13,6 @@ class CategoryTransformer extends TransformerAbstract{
 
         ];
     }
-    //public function includeProduct(category $cat){
-       // return $this->collection($cat->products->first(), new ProductTransformer);
-   // }
+   
  
 }

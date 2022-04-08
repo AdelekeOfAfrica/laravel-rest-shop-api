@@ -6,11 +6,15 @@ use App\Models\cart;
 use App\Models\order;
 use App\Models\orderitem;
 use Illuminate\Http\Request;
+use Dingo\Api\Routing\Helpers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use App\Transformers\OrderItemsTransformer;
 
 class checkoutcontroller extends Controller
 {
+   use Helpers;
+
     public function index($order_id){
         if($user=auth()->user()){
             $user_id =auth()->user()->id;
@@ -19,13 +23,12 @@ class checkoutcontroller extends Controller
             if($order_rec){
                 $order_det=orderitem::where('orders_id',$order_id)->get();
                 $total_price =orderitem::where('orders_id',$order_id)->sum('price');
-
                 return response()->json([
-                    'status'=>200,
-                    "order_res"=>$order_rec,
-                    "order_det"=>$order_det,
                     "total_price"=>$total_price
                 ]);
+                return $this->response->collection($order_det,new OrderItemsTransformer);
+ 
+                
             }
 
         }else{

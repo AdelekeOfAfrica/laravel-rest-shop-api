@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 use App\Models\product;
 use App\Models\category;
-use App\Models\productLine;
 use Illuminate\Http\Request;
 use Dingo\Api\Routing\Helpers;
 use App\Transformers\ProductTransformer;
@@ -23,8 +22,8 @@ class ProductController extends Controller
         //
         $product = product::all();
        // return $product;
-        //return $this->response->collection($product, (new ProductTransformer)->setDefaultIncludes(['produclLine']));
-        return $this->response->collection($product, new ProductTransformer)->setStatusCode(200);
+        return $this->response->item($product, (new ProductTransformer)->setDefaultIncludes(['category']));
+        
     }
 
     /**
@@ -112,8 +111,8 @@ class ProductController extends Controller
     {
         //
         $product = product::findOrFail($id);
-        //return $this->response->item($product,(new ProductTransformer)->setDefaultIncludes(["produclLine"]));
-        return $this->response->item($product, new ProductTransformer)->setStatusCode(200);
+        return $this->response->item($product,(new ProductTransformer)->setDefaultIncludes(["category"]));
+        
     }
 
     /**
@@ -217,21 +216,15 @@ class ProductController extends Controller
 
     public function product($slug){
         $category =category::where('slug',$slug)->first();
-
         if($category){
             $product =product::where('category_id',$category->id)->get();
-            if($product){
-                    
-                $response = [
-                    'message'=>'product  found successfully',
-                    'id'=>$id
-                ];
-                return response()->json($response,200);
+            if($product){     
+                return $this->response->item($product, (new ProductTransformer)->setDefaultIncludes(['category']));
             }
             else{
                 $response = [
                     'message'=>'product not found',
-                    'id'=>$id
+                    'product'=>$product
                 ];
                 return response()->json($response,200);  
             }
@@ -240,7 +233,7 @@ class ProductController extends Controller
         else{
             $response = [
                 'message'=>'category not found',
-                'id'=>$id
+                'category'=>$category
             ];
             return response()->json($response,200);  
         }
@@ -253,21 +246,16 @@ class ProductController extends Controller
 
         if($category){
             $product =product::where('category_id',$category->id)->where('slug',$product_slug)->get();
+            
             if($product){
-                    
-                $response = [
-                    'message'=>'product found ',
-                    'personal_data'=>[
-                        'product'=>$product,
-                        'category'=>$category
-                    ],
-                ];
-                return response()->json($response,200);
+                return $this->response->item($product, (new ProductTransformer)->setDefaultIncludes(['category']));
+                
+                
+                
             }
             else{
                 $response = [
                     'message'=>'product not found',
-                    'id'=>$product
                 ];
                 return response()->json($response,200);  
             }

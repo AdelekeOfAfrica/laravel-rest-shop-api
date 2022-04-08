@@ -74,7 +74,7 @@ class CategoryController extends Controller
      * @param  \App\Models\category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show($storeId,$id)
+    public function show($id)
     {
         //
         $category = category::findOrFail($id);
@@ -83,8 +83,7 @@ class CategoryController extends Controller
         if(empty($category)){
             throw new NotFoundHttpException('these product line is not found ');
         }
-
-        return $this->response->item($category, (new CategoryTransformer)->setDefaultIncludes(['product']))->setStatusCode(200);
+        return $this->response->item($category, new CategoryTransformer)->setStatusCode(200);
     }
 
     /**
@@ -146,7 +145,7 @@ class CategoryController extends Controller
      * @param  \App\Models\category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy($storeId,$id)
+    public function destroy($id)
     {
         //
         $category = category::findOrFail($id);

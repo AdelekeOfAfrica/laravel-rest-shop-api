@@ -5,10 +5,14 @@ use App\Models\cart;
 use App\Models\User;
 use App\Models\product;
 use Illuminate\Http\Request;
+use Dingo\Api\Routing\Helpers;
 use Illuminate\Support\Facades\Auth;
+use App\Transformers\CartTransformer;
 
 class CartController extends Controller
 {
+    use Helpers;
+    
     /**
      * Display a listing of the resource.
      *
@@ -20,9 +24,7 @@ class CartController extends Controller
         if($user=auth()->user()){
             $user_id = auth()->user()->id;
             $cart=cart::where('user_id',$user_id)->get();
-            return response()->json([
-                'cart'=>$cart
-            ]);
+           return $this->response->collection($cart,(new CartTransformer)->setDefaultIncludes(['product']));
         }else{
             return response()->json([
                 'status'=>403,

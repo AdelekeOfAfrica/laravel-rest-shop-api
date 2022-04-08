@@ -4,10 +4,10 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StoreController;
-use App\Http\Controllers\BrandsController;
+//use App\Http\Controllers\BrandsController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ProductLineController;
+//use App\Http\Controllers\ProductLineController;
 use App\Http\Controllers\Admin\AdminUserController;
 /*
 |--------------------------------------------------------------------------
@@ -82,7 +82,7 @@ $api->version('v1', function($api){
         $api->group(['middleware'=>'isStoreOwner'],function($api){
             $api->resource('/stores',StoreController::class,['except'=>['store']]);//here 
             
-            $api->resource('/stores/{store}/brands',BrandsController::class);
+           // $api->resource('/stores/{store}/brands',BrandsController::class);
             
             
         });
@@ -91,7 +91,7 @@ $api->version('v1', function($api){
 
     //middleware for store_admin
     $api->group(['middleware'=>['role:store_admin'],'prefix'=>'stadmin'], function($api){
-        $api->resource('/stores/productline', ProductLineController::class);
+       // $api->resource('/stores/productline', ProductLineController::class);
         $api->resource('/stores/product',ProductController::class);
         $api->get('stores/product/{slug}','App\Http\Controllers\ProductController@product');//fetching  all products by its category slug 
         $api->get('stores/product/{category_slug}/{product_slug}','App\Http\Controllers\ProductController@productcat');//fetching single product by its category slug

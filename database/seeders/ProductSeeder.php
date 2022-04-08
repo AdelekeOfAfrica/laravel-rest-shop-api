@@ -22,10 +22,13 @@ class ProductSeeder extends Seeder
         //product::factory()->count(5)
         //->hasAttached(productLine::factory())
         //->create();
-        productLine::factory()->hasAttached(
-            product::factory()->count(5)
-        )->create();
+        //productLine::factory()->hasAttached(
+            //product::factory()->count(5)
+        //)->create();
+        product::factory()->count(5)->create();
         }
+
+        
 
         
 

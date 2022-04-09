@@ -4,10 +4,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StoreController;
-//use App\Http\Controllers\BrandsController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
-//use App\Http\Controllers\ProductLineController;
 use App\Http\Controllers\Admin\AdminUserController;
 /*
 |--------------------------------------------------------------------------
@@ -103,5 +101,9 @@ $api->version('v1', function($api){
         $api->post('place-order','App\Http\Controllers\checkoutcontroller@store');
         $api->get('get-order/{order_id}','App\Http\Controllers\checkoutcontroller@index');
     });
+
+    $api->get('products','App\Http\Controllers\ProductController@index');
+    $api->post('place-order','App\Http\Controllers\checkoutcontroller@store');
+    $api->get('get-order/{order_id}','App\Http\Controllers\checkoutcontroller@index');
   
 });
